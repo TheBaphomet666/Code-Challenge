@@ -1,9 +1,13 @@
 package com.example.codechallenge.provider.model.shared;
 
+import java.io.Serializable;
+
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
-public class Card {
+@Getter
+public class Card implements Serializable {
 
     private String number;
 

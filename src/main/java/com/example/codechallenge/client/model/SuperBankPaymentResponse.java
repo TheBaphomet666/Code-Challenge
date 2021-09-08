@@ -1,8 +1,12 @@
 package com.example.codechallenge.client.model;
 
-import com.example.codechallenge.provider.model.PaymentResponse;
+import java.io.Serializable;
 
-public class SuperBankPaymentResponse {
+import com.example.codechallenge.provider.model.PaymentResponse;
+import lombok.Getter;
+
+@Getter
+public class SuperBankPaymentResponse implements Serializable {
 
     private String paymentId;
 

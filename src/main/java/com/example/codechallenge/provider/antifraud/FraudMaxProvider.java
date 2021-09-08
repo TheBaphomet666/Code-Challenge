@@ -42,6 +42,6 @@ public class FraudMaxProvider implements AntiFraudProvider {
 
     private boolean processResponse(FraudMaxResponse response) {
 
-        return response.getRisk().compareTo(MAXIMUM_RISK) < 0 && !response.isCovered();
+        return response.getRisk().compareTo(MAXIMUM_RISK) > 0;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.codechallenge.provider.model.shared;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
@@ -7,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class Amount {
+public class Amount implements Serializable {
 
     @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal value;

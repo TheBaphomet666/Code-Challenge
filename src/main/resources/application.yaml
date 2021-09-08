@@ -36,7 +36,7 @@ logging:
     root: info
     org.springframework.web.client: debug
     org.apache.http: info
-    com.payu: debug
+    com.example: debug
 
 # Circuit breaker configuration
 resilience4j.circuitbreaker:
@@ -72,12 +72,12 @@ feign:
   client:
     config:
       superbank-api:
-        url: http://localhost:9124/superbank-api
+        url: https://mocks666.herokuapp.com/superbank-api
         connectTimeout: 3000
         readTimeout: 5000
         loggerLevel: basic
       fraudmax-api:
-        url: http://localhost:9124/fraudmax-api
+        url: https://mocks666.herokuapp.com/fraudmax-api
         connectTimeout: 3000
         readTimeout: 5000
         loggerLevel: basic

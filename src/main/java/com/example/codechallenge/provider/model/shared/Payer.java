@@ -1,9 +1,11 @@
 package com.example.codechallenge.provider.model.shared;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 
 @Getter
-public class Payer {
+public class Payer implements Serializable {
 
     private String name;
 
