@@ -1,6 +1,7 @@
 package com.example.codechallenge.provider.bank;
 
 import com.example.codechallenge.client.SuperBankFeignClient;
+import com.example.codechallenge.controller.model.PurchaseRequest;
 import com.example.codechallenge.provider.model.PaymentResponse;
 import com.example.codechallenge.provider.model.RefundResponse;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ public class SuperBankProvider implements BankProvider {
 
 
     @Override
-    public PaymentResponse doPayment() {
+    public PaymentResponse doPayment(PurchaseRequest purchaseRequest) {
+
         return null;
     }
 

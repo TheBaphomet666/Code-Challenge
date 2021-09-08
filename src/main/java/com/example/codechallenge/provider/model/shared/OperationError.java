@@ -1,9 +1,10 @@
 package com.example.codechallenge.provider.model.shared;
 
-import com.example.codechallenge.provider.model.shared.OperationErrorType;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder(setterPrefix = "with")
 public class OperationError {
 
     private String ErrorMessage;

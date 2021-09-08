@@ -7,7 +7,10 @@ import lombok.Getter;
 @Getter
 public enum OperationStatus {
 
-    ANTIFRAUD_DECLINED("Declined by antifraud");
-
+    ANTIFRAUD_DECLINED("Declined by antifraud"),
+    ERROR("Error ocurred"),
+    COMPLETED("COMPLETED");
     private final String description;
+
+
 }

@@ -38,6 +38,10 @@ public class Order implements Serializable {
     @Length(max = 255)
     private String clientId;
 
+    @Column(name = "payment_platform_id", nullable = false, length = 255)
+    @Length(max = 255)
+    private String paymentPlatformId;
+
     @Column(name = "state", length = 25)
     @Length(max = 25)
     private String state;
