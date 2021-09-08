@@ -75,6 +75,7 @@ the cards on the example are encrypted as the service needs
 
 }
 ```
+![Alt text](db.png?raw=true "db SS")
 
 #LOCAL DEPLOYMENT
 
