@@ -40,15 +40,15 @@ public class Order implements Serializable {
     @Length(max = 255)
     private String clientId;
 
-    @Column(name = "payment_platform_id", nullable = false, length = 255)
+    @Column(name = "payment_platform_id", length = 255)
     @Length(max = 255)
     private String paymentPlatformId;
 
-    @Column(name = "state", length = 25)
+    @Column(name = "state", length = 25, nullable = false)
     @Length(max = 25)
     private String state;
 
-    @Column(name = "status", length = 25)
+    @Column(name = "status", length = 25, nullable = false)
     @Length(max = 25)
     private String status;
 
@@ -69,7 +69,7 @@ public class Order implements Serializable {
     @Length(max = 255)
     private String responseMessage;
 
-    @Column(name = "currency", length = 25)
+    @Column(name = "currency", length = 25, nullable = false)
     @Length(max = 25)
     private String currency;
 

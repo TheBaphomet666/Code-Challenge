@@ -11,16 +11,18 @@ import com.example.codechallenge.util.BankCardEncryption;
 import com.example.codechallenge.util.CardEncryption;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class SuperBankProvider implements BankProvider {
 
-    private SuperBankFeignClient superBankFeignClient;
+    private final SuperBankFeignClient superBankFeignClient;
 
-    private BankCardEncryption bankCardEncryption;
+    private final BankCardEncryption bankCardEncryption;
 
-    private CardEncryption cardEncryption;
+    private final CardEncryption cardEncryption;
 
     private static final String SUPER_BANK_PAYMENT_CIRCUIT_BREAKER = "superBankPayment";
 

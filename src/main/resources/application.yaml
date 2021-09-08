@@ -13,6 +13,8 @@ management:
 # Database configurations
 # ----------------------------------------------------------------------------------------------------------------------
 spring:
+  jpa:
+    generate-ddl: true
   datasource:
     url: jdbc:postgresql://ec2-18-235-45-217.compute-1.amazonaws.com:5432/d1a2gmh5ru2ht5
     username: ddmzkaytlsdxdm
@@ -70,7 +72,12 @@ feign:
   client:
     config:
       superbank-api:
-        url: http://localhost:9124/merchant-risk-api
+        url: http://localhost:9124/superbank-api
+        connectTimeout: 3000
+        readTimeout: 5000
+        loggerLevel: basic
+      fraudmax-api:
+        url: http://localhost:9124/fraudmax-api
         connectTimeout: 3000
         readTimeout: 5000
         loggerLevel: basic

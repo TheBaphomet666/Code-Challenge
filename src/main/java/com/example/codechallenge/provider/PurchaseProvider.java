@@ -17,11 +17,12 @@ import com.example.codechallenge.provider.model.shared.OperationStatus;
 import com.example.codechallenge.provider.model.shared.OperationType;
 import com.example.codechallenge.repository.OrderRepository;
 import com.example.codechallenge.repository.entities.Order;
-import com.example.codechallenge.util.CardEncryption;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 @AllArgsConstructor
 public class PurchaseProvider {
 
@@ -30,8 +31,6 @@ public class PurchaseProvider {
     private final BankProvider bankProvider;
 
     private final OrderRepository orderRepository;
-
-    private final CardEncryption cardEncryption;
 
     public OperationResponse doPurchase(PurchaseRequest purchaseRequest) {
 
@@ -58,8 +57,9 @@ public class PurchaseProvider {
         } catch (Exception e){
 
             order = orderBuilder.withStatus(OperationStatus.ERROR.name())
-                    .withResponseMessage(OperationStatus.ERROR.getDescription())
+                    .withResponseMessage(e.getMessage())
                     .withState(OperationState.ERROR.name()).build();
+            log.error("Error occurred on purchase [{}],",order.getId(), e);
             orderRepository.save(order);
             return buildErrorOperationResponse(order, e);
         }
@@ -80,7 +80,7 @@ public class PurchaseProvider {
 
         return OperationResponse.builder()
                 .withOperationId(order.getId())
-                .withResponseMessage(order.getResponseMessage())
+                .withResponseMessage(e.getMessage())
                 .withType(OperationType.PURCHASE)
                 .withState(order.getState())
                 .withError(getOperationError(e))
