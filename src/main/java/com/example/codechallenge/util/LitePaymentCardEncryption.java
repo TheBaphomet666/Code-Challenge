@@ -1,8 +1,10 @@
 package com.example.codechallenge.util;
 
-import java.security.Key;
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 import com.example.codechallenge.provider.model.shared.Card;
 import com.google.gson.Gson;
@@ -13,9 +15,11 @@ import org.springframework.util.Base64Utils;
 @Component
 public class LitePaymentCardEncryption implements CardEncryption { //TODO THIS WAS DONE ONLY FOR GO THROUGH NOT REAL EXPECTED IMPL
 
-    static String algorithm = "DESede";
+    private static final String algorithm = "AES";
 
-    private final Key symKey;
+    private static final IvParameterSpec IV = new IvParameterSpec(DatatypeConverter.parseHexBinary("00000000000000000000000000000000"));
+
+    private final SecretKey symKey;
 
     private final Cipher c;
 
@@ -24,8 +28,8 @@ public class LitePaymentCardEncryption implements CardEncryption { //TODO THIS W
     public LitePaymentCardEncryption() {
 
         try {
-            symKey = KeyGenerator.getInstance(algorithm).generateKey();
-            c = Cipher.getInstance(algorithm);
+            symKey = new SecretKeySpec("12312312312312312312312312312312".getBytes(), "AES");
+            c = Cipher.getInstance("AES/CBC/NoPadding");
         }catch (Exception e){
             throw new EncryptionException("Creating Encryption Bean", e);
         }
@@ -49,7 +53,7 @@ public class LitePaymentCardEncryption implements CardEncryption { //TODO THIS W
     private byte[] encryptF(String input) {
 
         try{
-            c.init(Cipher.ENCRYPT_MODE, symKey);
+            c.init(Cipher.ENCRYPT_MODE, symKey, IV);
             byte[] inputBytes = input.getBytes();
             return c.doFinal(inputBytes);
         }catch (Exception e) {
@@ -62,7 +66,7 @@ public class LitePaymentCardEncryption implements CardEncryption { //TODO THIS W
         var encryptionBytes = Base64Utils.decodeFromString(input);
 
         try {
-            c.init(Cipher.DECRYPT_MODE, symKey);
+            c.init(Cipher.DECRYPT_MODE, symKey, IV);
 
             byte[] decrypt = c.doFinal(encryptionBytes);
 

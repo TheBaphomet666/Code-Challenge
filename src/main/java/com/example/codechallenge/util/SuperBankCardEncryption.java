@@ -1,8 +1,12 @@
 package com.example.codechallenge.util;
 
 import java.security.Key;
+import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.example.codechallenge.provider.model.shared.Card;
 import com.google.gson.Gson;
@@ -15,7 +19,7 @@ public class SuperBankCardEncryption implements BankCardEncryption { //TODO THIS
 
     static String algorithm = "DESede";
 
-    private final Key symKey;
+    private final SecretKey symKey;
 
     private final Cipher c;
 
@@ -24,7 +28,12 @@ public class SuperBankCardEncryption implements BankCardEncryption { //TODO THIS
     public SuperBankCardEncryption() {
 
         try {
-            symKey = KeyGenerator.getInstance(algorithm).generateKey();
+            SecureRandom sr = SecureRandom.getInstanceStrong();
+            byte[] salt = new byte[16];
+            sr.nextBytes(salt);
+
+            PBEKeySpec spec = new PBEKeySpec("password".toCharArray(), salt, 1000, 128 * 8);
+            symKey = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1").generateSecret(spec);
             c = Cipher.getInstance(algorithm);
         }catch (Exception e){
             throw new EncryptionException("Creating Encryption Bean", e);
