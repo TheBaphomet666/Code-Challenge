@@ -1,0 +1,39 @@
+# Spring Boot Application and Actuator configuration
+server:
+  port: 18115
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,loggers"
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Database configurations
+# ----------------------------------------------------------------------------------------------------------------------
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payments
+    username: payments
+    password: 12345
+    configuration:
+      connectionInitSql: SELECT 1
+      maximumPoolSize: 4
+      minimumIdle: 2
+      connectionTimeout: 10000
+      idleTimeout: 20000
+      maxLifetime: 60000
+      validationTimeout: 3000
+      leakDetectionThreshold: 1000
+
+
+## Logging level configuration
+logging:
+  level:
+    root: info
+    org.springframework.web.client: debug
+    org.apache.http: info
+    com.payu: debug
+
+
