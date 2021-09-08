@@ -1,36 +1,32 @@
 package com.example.codechallenge.controller;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/**
- * Exception handler that will map the raised exception into rest responses
- *
- * @author <a href="mailto:nilson.marmolejo@payu.com">Nilson Marmolejo</a>
- * @since 1.0.0
- */
-@Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ApiRestErrorHandler {
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<?> handleException(Exception ex, HttpServletRequest request) {
 
-    @ExceptionHandler(RuntimeException.class)
-    public final ResponseEntity<Object> handleException(Exception ex, HttpServletRequest request) {
-
-        log.error("An error occurred: [{}]", buildRequestString(request), ex);
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         String message = "";
+        if(ex instanceof ConstraintViolationException || ex instanceof MethodArgumentNotValidException){
+
+            return new ResponseEntity<>(sendResponse(HttpStatus.BAD_REQUEST, ex), status); // TODO NOT ELEGANT BUT WORKS FOR NOW
+        }
         if (ex instanceof HttpMessageNotReadableException) {
             status = HttpStatus.BAD_REQUEST;
         }
@@ -38,49 +34,22 @@ public class ApiRestErrorHandler {
         return new ResponseEntity<>(message, status);
     }
 
-    private String buildRequestString(HttpServletRequest request) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        Map<String, String> parameters = buildParametersMap(request);
+    private ExceptionResponseMessage sendResponse(HttpStatus status, Exception ex) {
 
-        stringBuilder.append("REQUEST ");
-        stringBuilder.append("method=[").append(request.getMethod()).append("] ");
-        stringBuilder.append("path=[").append(request.getRequestURI()).append("] ");
-        stringBuilder.append("headers=[").append(buildHeadersMap(request)).append("] ");
-
-        if (!parameters.isEmpty()) {
-            stringBuilder.append("parameters=[").append(parameters).append("] ");
-        }
-
-        return stringBuilder.toString();
+        return new ExceptionResponseMessage(Instant.now(), status.value(), status.getReasonPhrase(),
+                ex.getClass().toString(), ex.getMessage());
     }
+}
 
-    private Map<String, String> buildParametersMap(HttpServletRequest httpServletRequest) {
+@Data
+@AllArgsConstructor
+class ExceptionResponseMessage {
 
-        Map<String, String> resultMap = new HashMap<>();
-        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
-
-        while (parameterNames.hasMoreElements()) {
-            String key = parameterNames.nextElement();
-            String value = httpServletRequest.getParameter(key);
-            resultMap.put(key, value);
-        }
-
-        return resultMap;
-    }
-
-    private Map<String, String> buildHeadersMap(HttpServletRequest request) {
-
-        Map<String, String> map = new HashMap<>();
-
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = headerNames.nextElement();
-            String value = request.getHeader(key);
-            map.put(key, value);
-        }
-
-        return map;
-    }
+    private Instant time;
+    private int status;
+    private String error;
+    private String exception;
+    private String message;
 
 }
