@@ -14,9 +14,9 @@ management:
 # ----------------------------------------------------------------------------------------------------------------------
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/payments
-    username: payments
-    password: 12345
+    url: jdbc:postgresql://ec2-18-235-45-217.compute-1.amazonaws.com:5432/d1a2gmh5ru2ht5
+    username: ddmzkaytlsdxdm
+    password: 65984a5474bf5eb749e9d1be7d2a359c950a68bb7496f8e4be912816f2795f9e
     configuration:
       connectionInitSql: SELECT 1
       maximumPoolSize: 4
