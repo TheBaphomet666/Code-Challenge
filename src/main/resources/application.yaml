@@ -36,4 +36,41 @@ logging:
     org.apache.http: info
     com.payu: debug
 
+# Circuit breaker configuration
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+  instances:
+    superBankPayment:
+      baseConfig: default
+      failureRateThreshold: 30
+      slowCallRateThreshold: 50
+      slowCallDurationThreshold: 40000
+      permittedNumberOfCallsInHalfOpenState: 10
+      slidingWindowType: TIME_BASED
+      slidingWindowSize: 60
+      minimumNumberOfCalls: 10
+      waitDurationInOpenState: 15s
 
+# Retry Configuration
+resilence4J.retry:
+  instances:
+    retryPayment:
+      maxRetryAttempts: 2
+      waitDuration: 100
+
+feign:
+  client:
+    config:
+      superbank-api:
+        url: http://localhost:9124/merchant-risk-api
+        connectTimeout: 3000
+        readTimeout: 5000
+        loggerLevel: basic

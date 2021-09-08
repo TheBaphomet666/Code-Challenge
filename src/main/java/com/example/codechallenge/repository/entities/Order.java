@@ -3,7 +3,6 @@ package com.example.codechallenge.repository.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,15 +13,18 @@ import com.example.codechallenge.controller.model.OperationRequest;
 import com.example.codechallenge.controller.model.PurchaseRequest;
 import com.example.codechallenge.provider.model.shared.OperationState;
 import com.example.codechallenge.provider.model.shared.OperationStatus;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(schema = "payments", name = "order")
 @Data
 @Builder(setterPrefix = "with")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order implements Serializable {
 
     /**
@@ -70,14 +72,6 @@ public class Order implements Serializable {
     @Column(name = "currency", length = 25)
     @Length(max = 25)
     private String currency;
-
-    /**
-     * Default constructor.
-     */
-    public Order() {
-
-        super();
-    }
 
     public static Order.OrderBuilder builderFromOperation(OperationRequest operationRequest) {
 
