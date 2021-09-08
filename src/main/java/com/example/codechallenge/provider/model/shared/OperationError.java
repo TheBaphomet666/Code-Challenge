@@ -1,5 +1,6 @@
-package com.example.codechallenge.controller.model;
+package com.example.codechallenge.provider.model.shared;
 
+import com.example.codechallenge.provider.model.shared.OperationErrorType;
 import lombok.Getter;
 
 @Getter

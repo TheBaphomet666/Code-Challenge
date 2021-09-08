@@ -5,19 +5,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.example.codechallenge.provider.model.shared.Amount;
 import lombok.Getter;
 
 @Getter
-public class PurchaseRequestDTO {
+public class PurchaseRequest extends OperationRequest {
 
-    @NotBlank(message = "clientId can not be empty")
-    private String clientId;
-
-    @NotNull(message = "payerDTO can not be empty")
-    private PayerDTO payerDTO;
-
-    @NotNull(message = "amountDTO can not be empty")
-    private AmountDTO amountDTO;
+    @NotNull(message = "amount can not be empty")
+    private Amount amount;
 
     @NotBlank(message = "encryptedCard can not be empty")
     private String encryptedCard;

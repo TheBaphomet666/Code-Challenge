@@ -1,8 +1,8 @@
 package com.example.codechallenge.provider.antifraud;
 
-import com.example.codechallenge.provider.model.FraudValidationResponse;
+import com.example.codechallenge.controller.model.PurchaseRequest;
 
 public interface AntiFraudProvider {
 
-    FraudValidationResponse validateFraud();
+    boolean isFraudulentPurchase(PurchaseRequest purchaseRequest);
 }

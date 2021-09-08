@@ -1,9 +1,7 @@
 package com.example.codechallenge.client;
 
-import java.util.List;
-
-import com.example.codechallenge.client.model.AntifraudRespose;
 import com.example.codechallenge.client.model.AntifraudValidationRequest;
+import com.example.codechallenge.client.model.FraudMaxResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +13,6 @@ public interface FraudMaxFeignClient {
 
 
     @PostMapping(value = "/validate")
-    List<AntifraudRespose> validateFraud(@RequestBody AntifraudValidationRequest antifraudValidationRequest);
+    FraudMaxResponse validateFraud(@RequestBody AntifraudValidationRequest antifraudValidationRequest);
 }
 

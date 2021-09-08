@@ -1,4 +1,4 @@
-package com.example.codechallenge.controller.model;
+package com.example.codechallenge.provider.model.shared;
 
 public enum OperationErrorType {
 

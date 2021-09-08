@@ -1,9 +1,9 @@
-package com.example.codechallenge.controller.model;
+package com.example.codechallenge.provider.model.shared;
 
 import lombok.Getter;
 
 @Getter
-public class PayerDTO {
+public class Payer {
 
     private String name;
 

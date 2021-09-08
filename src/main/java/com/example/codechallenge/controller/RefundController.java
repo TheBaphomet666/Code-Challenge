@@ -3,7 +3,7 @@ package com.example.codechallenge.controller;
 import javax.validation.Valid;
 
 import com.example.codechallenge.controller.model.OperationResponse;
-import com.example.codechallenge.controller.model.RefundRequestDTO;
+import com.example.codechallenge.controller.model.RefundRequest;
 import com.example.codechallenge.provider.RefundProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +36,9 @@ public class RefundController {
     }
 
     @PostMapping(path = "/refund")
-    public ResponseEntity<OperationResponse> refundOrder(@Valid @RequestBody final RefundRequestDTO refundRequestDTO) {
+    public ResponseEntity<OperationResponse> refundOrder(@Valid @RequestBody final RefundRequest refundRequest) {
 
-        var response = refundProvider.doRefund(refundRequestDTO);
+        var response = refundProvider.doRefund(refundRequest);
 
         return new ResponseEntity<>(response, response.getHttpResponseStatus());
     }

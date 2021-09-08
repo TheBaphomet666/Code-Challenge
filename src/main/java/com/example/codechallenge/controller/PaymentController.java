@@ -2,12 +2,10 @@ package com.example.codechallenge.controller;
 
 import javax.validation.Valid;
 
-import com.example.codechallenge.controller.model.OperationErrorType;
 import com.example.codechallenge.controller.model.OperationResponse;
 import com.example.codechallenge.provider.PurchaseProvider;
-import com.example.codechallenge.controller.model.PurchaseRequestDTO;
+import com.example.codechallenge.controller.model.PurchaseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,9 +36,9 @@ public class PaymentController {
     }
 
     @PostMapping(path = "/purchase")
-    public ResponseEntity<OperationResponse> purchaseOrder(@Valid @RequestBody final PurchaseRequestDTO purchaseRequestDTO) {
+    public ResponseEntity<OperationResponse> purchaseOrder(@Valid @RequestBody final PurchaseRequest purchaseRequest) {
 
-        var response = purchaseProvider.doPurchase(purchaseRequestDTO);
+        var response = purchaseProvider.doPurchase(purchaseRequest);
 
         return new ResponseEntity<>(response, response.getHttpResponseStatus());
     }

@@ -1,18 +1,21 @@
 package com.example.codechallenge.controller.model;
 
+import com.example.codechallenge.provider.model.shared.OperationError;
+import com.example.codechallenge.provider.model.shared.OperationErrorType;
+import com.example.codechallenge.provider.model.shared.OperationType;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@Builder
+@Builder(setterPrefix = "with")
 @Getter
 public class OperationResponse {
 
     private String operationId;
 
-    private Status status;
+    private String state;
 
-    private Type type;
+    private OperationType type;
 
     private String responseMessage;
 

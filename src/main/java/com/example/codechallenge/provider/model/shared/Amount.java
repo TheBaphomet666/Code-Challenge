@@ -1,14 +1,13 @@
-package com.example.codechallenge.controller.model;
+package com.example.codechallenge.provider.model.shared;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
-public class AmountDTO {
+public class Amount {
 
     @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal value;

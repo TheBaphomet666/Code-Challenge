@@ -1,10 +1,11 @@
 package com.example.codechallenge.provider;
 
 import com.example.codechallenge.controller.model.OperationResponse;
-import com.example.codechallenge.controller.model.PurchaseRequestDTO;
-import com.example.codechallenge.controller.model.RefundRequestDTO;
+import com.example.codechallenge.controller.model.RefundRequest;
 import com.example.codechallenge.provider.antifraud.AntiFraudProvider;
 import com.example.codechallenge.provider.bank.BankProvider;
+import com.example.codechallenge.repository.OrderRepository;
+import com.example.codechallenge.util.CardEncryption;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,11 @@ public class RefundProvider {
 
     private BankProvider bankProvider;
 
-    public OperationResponse doRefund(RefundRequestDTO refundRequestDTO) {
+    private OrderRepository orderRepository;
+
+    private CardEncryption cardEncryption;
+
+    public OperationResponse doRefund(RefundRequest refundRequest) {
 
         return null;
     }
